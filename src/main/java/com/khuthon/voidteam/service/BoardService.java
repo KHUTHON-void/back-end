@@ -147,7 +147,7 @@ public class BoardService {
             return Sort.by(Sort.Order.desc("likeCount"));
         }
         else{
-            return Sort.by(Sort.Order.desc("modifiedAt"));
+            return Sort.by(Sort.Order.desc("createdAt"));
         }
     }
     private Category getInterestType(String requestCategoryType) {
