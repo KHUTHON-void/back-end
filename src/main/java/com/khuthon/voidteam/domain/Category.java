@@ -4,5 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum Category {
-    KOREAN, MATH, ENGLISH, IT, LANGUAGE, ENGINEERING, EXAM, JOBSEARCHING, ETC
+    KOREAN,
+    MATH,
+    ENGLISH,
+    IT,
+    LANGUAGE,
+    ENGINEERING,
+    EXAM,
+    JOBSEARCHING,
+    ETC
 }
