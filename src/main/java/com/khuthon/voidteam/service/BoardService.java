@@ -158,18 +158,17 @@ public class BoardService {
         } else if (Category.ENGLISH.toString().equalsIgnoreCase(requestCategoryType)) {
             return Category.ENGINEERING;
         } else if (Category.LANGUAGE.toString().equalsIgnoreCase(requestCategoryType)) {
-            return  Category.LANGUAGE;
+            return Category.LANGUAGE;
         } else if (Category.ENGINEERING.toString().equalsIgnoreCase(requestCategoryType)) {
             return Category.ENGINEERING;
-        }else if(Category.EXAM.toString().equalsIgnoreCase(requestCategoryType)) {
-                return Category.EXAM;
-            }
-        else if(Category.IT.toString().equalsIgnoreCase(requestCategoryType)){
+        } else if (Category.EXAM.toString().equalsIgnoreCase(requestCategoryType)) {
+            return Category.EXAM;
+        } else if (Category.IT.toString().equalsIgnoreCase(requestCategoryType)) {
             return Category.IT;
-        }else if(Category.JOBSEARCHING.toString().equalsIgnoreCase(requestCategoryType)){
+        } else if (Category.JOBSEARCHING.toString().equalsIgnoreCase(requestCategoryType)) {
             return Category.JOBSEARCHING;
-        }
-        else {
+        } else {
             return Category.ETC;
         }
+    }
 }
