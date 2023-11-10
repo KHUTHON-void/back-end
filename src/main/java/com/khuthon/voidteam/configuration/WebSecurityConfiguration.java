@@ -112,11 +112,12 @@ public class WebSecurityConfiguration {
 
         configuration.addAllowedHeader("authorization");
         configuration.addAllowedHeader("Content-Type");
-        configuration.addExposedHeader("Cache-Control");
-
+        configuration.addAllowedHeader("Cache-Control");
+        configuration.addExposedHeader("my-custom-header");
         configuration.addExposedHeader("authorization");
         configuration.addExposedHeader("Cache-Control");
         configuration.addExposedHeader("Content-Type");
+        configuration.addExposedHeader("my-custom-header");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

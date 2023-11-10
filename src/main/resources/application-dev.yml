@@ -1,11 +1,13 @@
+
+
+
+
 spring:
-  # DATABASE
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/test
-    username: sa
-    password:
-  # JPA
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://voditeam.c2gj1gfl1vpz.us-east-1.rds.amazonaws.com/voidteam
+    username: "admin"
+    password: "03100310"
   jpa:
     hibernate:
       ddl-auto: create
@@ -29,7 +31,21 @@ spring:
       max-file-size: 100MB
       max-request-size: 200MB
 
+security:
+  require-ssl: true
+
 server:
+  port: 8090
+  ssl:
+    enabled: true
+    key-store: classpath:voidteam.jks
+    key-store-password: test1234
+    key-store-type: JKS
+    keyAlias: voidteam
+  http:
+    port: 8080
+
+
   compression:
     enabled: true
     mime-types: multipart/form-data,text/plain,application/json,  application/octet-stream, image/heic,image/jpeg, image/png
