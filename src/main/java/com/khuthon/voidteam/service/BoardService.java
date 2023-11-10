@@ -41,6 +41,7 @@ public class BoardService {
         Board board = Board.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
+                .category(request.getCategory())
                 .member(member)
                 .build();
         boardRepository.save(board);
@@ -53,6 +54,7 @@ public class BoardService {
         }
         return board;
     }
+
 
     @Transactional
     public Board update(Long boardId, BoardRequestDto.CreateBoardDto request) {
@@ -79,6 +81,7 @@ public class BoardService {
                 .isLiked(isLiked)
                 .member(MemberResponseDto.MemberDto.builder().memberId(boardMember.getId()).profileImgUrl(boardMember.getProfileImgURL()).nickname(boardMember.getNickname()).build())
                 .title(board.getTitle())
+                .category(board.getCategory())
                 .content(board.getContent())
                 .createdDate(board.getCreatedDate())
                 .modifiedDate(board.getUpdatedDate())
@@ -101,4 +104,5 @@ public class BoardService {
         board.increaseHit();
         return result;
     }
+
 }

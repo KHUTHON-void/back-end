@@ -1,5 +1,6 @@
 package com.khuthon.voidteam.dto;
 
+import com.khuthon.voidteam.domain.Category;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class BoardResponseDto {
         private MemberResponseDto.MemberDto member;
         private String title;
         private String content;
+        private Category category;
 
         private List<String> mediaList;
 

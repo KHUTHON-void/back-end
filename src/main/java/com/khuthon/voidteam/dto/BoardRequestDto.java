@@ -1,5 +1,6 @@
 package com.khuthon.voidteam.dto;
 
+import com.khuthon.voidteam.domain.Category;
 import lombok.*;
 
 public class BoardRequestDto {
@@ -11,8 +12,8 @@ public class BoardRequestDto {
     public static class CreateBoardDto{
         private String title;
         private String content;
+        private Category category;
     }
-
 
 
 }
