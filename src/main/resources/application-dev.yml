@@ -1,0 +1,56 @@
+spring:
+  # DATABASE
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/test
+    username: sa
+    password:
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  h2:
+    console:
+      enabled: true
+      path: /console
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 200MB
+
+server:
+  compression:
+    enabled: true
+    mime-types: multipart/form-data,text/plain,application/json,  application/octet-stream, image/heic,image/jpeg, image/png
+
+
+cloud:
+  aws:
+    s3:
+      bucket: voidteam
+    credentials:
+      access-key: AKIA6JM6FNH7VJIGHL4U
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
+
+jwt:
+  secret : "void"
+  access:
+    expiration: 604800000
+    header: Authorization
