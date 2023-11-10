@@ -21,7 +21,7 @@ public class RecruitController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value ="")
-    public ResponseEntity<RecruitResponseDto.CreateRecruitDto> createRecruit(@RequestPart(value = "data") RecruitRequestDto.CreateRecruitDto request, Principal principal) throws Exception {
+    public ResponseEntity<RecruitResponseDto.CreateRecruitDto> createRecruit(@RequestBody RecruitRequestDto.CreateRecruitDto request, Principal principal) throws Exception {
 
         Recruit recruit = recruitService.create(request, principal);
         return ResponseEntity.ok(RecruitResponseDto.CreateRecruitDto.builder().recruitId(recruit.getId()).build());
@@ -55,6 +55,4 @@ public class RecruitController {
         recruitService.delete(recruitId);
         return ResponseEntity.ok().build();
     }
-
-
 }

@@ -23,7 +23,7 @@ public class RecruitCommentController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/recruit/{recruitId}/comment")
     public ResponseEntity<RecruitCommentResponseDto.CreateRecruitCommentDto> createComment(Principal principal, @PathVariable(name = "recruitId")Long recruitId,
-                                                                                                       @RequestPart(value = "data") RecruitCommentRequestDto.CreateRecruitCommentDto request) throws Exception {
+                                                                                                       @RequestBody RecruitCommentRequestDto.CreateRecruitCommentDto request) throws Exception {
         RecruitComment comment = recruitCommentService.create(recruitId, request, principal);
         return ResponseEntity.ok(RecruitCommentResponseDto.CreateRecruitCommentDto.builder().commentId(comment.getId()).build());
     }
