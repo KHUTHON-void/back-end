@@ -56,6 +56,10 @@ public class Member extends BaseEntity implements UserDetails {
 
     private String profileImgURL;
 
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Comment> comment = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
