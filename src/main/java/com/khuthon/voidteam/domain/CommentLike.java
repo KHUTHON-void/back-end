@@ -19,8 +19,12 @@ public class CommentLike {
     @JoinColumn(name="comment_id")
     private Comment comment;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name ="member_id")
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="board_id")
+    private Board board;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="member_id")
+    private Member member;
 
 }

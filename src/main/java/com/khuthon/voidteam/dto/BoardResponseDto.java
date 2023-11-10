@@ -15,7 +15,7 @@ public class BoardResponseDto {
     public static class BoardDto{
         private Long boardId;
         private Boolean isLiked;
-       // private MemberResponseDto.MemberDto member;
+        private MemberResponseDto.MemberDto member;
         private String title;
         private String content;
 

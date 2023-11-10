@@ -24,6 +24,7 @@ public class S3Util {
 
 
     public String uploadPostObjectToS3(MultipartFile object, Long postId) throws Exception {
+
         String originalName = object.getOriginalFilename();
         String extension = Objects.requireNonNull(originalName).substring(originalName.lastIndexOf(".") + 1);
         String generateFileName = UUID.randomUUID() + "." + extension;

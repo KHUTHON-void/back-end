@@ -40,6 +40,7 @@ dependencies {
     implementation 'commons-fileupload:commons-fileupload:1.5'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
     implementation group: 'org.json', name: 'json', version: '20200518'
 }
 

@@ -3,8 +3,11 @@ package com.khuthon.voidteam.service;
 import com.amazonaws.services.kms.model.NotFoundException;
 import com.khuthon.voidteam.domain.Board;
 import com.khuthon.voidteam.domain.BoardFile;
+import com.khuthon.voidteam.domain.Member;
 import com.khuthon.voidteam.dto.BoardRequestDto;
 import com.khuthon.voidteam.dto.BoardResponseDto;
+import com.khuthon.voidteam.dto.MemberResponseDto;
+import com.khuthon.voidteam.repository.MemberRepository;
 import com.khuthon.voidteam.util.JacksonUtil;
 import com.khuthon.voidteam.repository.BoardFileRepository;
 import com.khuthon.voidteam.repository.BoardLikeRepository;
@@ -26,19 +29,19 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardFileRepository boardFileRepository;
     private final BoardLikeRepository boardLikeRepository;
+    private final MemberRepository memberRepository;
     private final S3Util s3Util;
-    //private final MemberRepository memberRepository;
 
     @Transactional
     public Board create(List<MultipartFile> mediaList, String boardCreateDto, Principal principal) throws Exception {
 
         JacksonUtil jacksonUtil = new JacksonUtil();
         BoardRequestDto.CreateBoardDto request = (BoardRequestDto.CreateBoardDto) jacksonUtil.strToObj(boardCreateDto, BoardRequestDto.CreateBoardDto.class);
-        //Member member = memberRepository.findByEmail(principal.getName()).orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
+        Member member = memberRepository.findByEmail(principal.getName()).orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
         Board board = Board.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
-               // .member(member)
+                .member(member)
                 .build();
         boardRepository.save(board);
         for(MultipartFile media: mediaList){
@@ -66,15 +69,15 @@ public class BoardService {
 
     @Transactional
     public BoardResponseDto.BoardDto findBoard(Long boardId, Principal principal){
-        //Member nowMember = memberRepository.findByEmail(principal.getName()).orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
-        //Member boardMember = board.getMember();
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("Board를 찾을 수 없습니다."));
+        Member nowMember = memberRepository.findByEmail(principal.getName()).orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
+        Member boardMember = board.getMember();
         Boolean isLiked = boardLikeRepository.existsBoardLikeByMemberAndBoard(nowMember, board);
         Boolean isMyPost = boardRepository.existsByMember(nowMember);
         BoardResponseDto.BoardDto result = BoardResponseDto.BoardDto.builder()
                 .boardId(board.getId())
                 .isLiked(isLiked)
-                //.member(MemberResponseDto.MemberDto.builder().memberId(diaryMember.getMemberId()).profileImgURL(diaryMember.getProfileImg()).name(diaryMember.getName()).nickname(diaryMember.getNickname()).phoneNumber(diaryMember.getPhoneNumber()).build())
+                .member(MemberResponseDto.MemberDto.builder().memberId(boardMember.getId()).profileImgUrl(boardMember.getProfileImgURL()).nickname(boardMember.getNickname()).build())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .createdDate(board.getCreatedDate())

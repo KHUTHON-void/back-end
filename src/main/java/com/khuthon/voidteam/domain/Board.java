@@ -34,9 +34,9 @@ public class Board {
     @Column(columnDefinition = "INT DEFAULT 0")
     private int viewCount;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder.Default
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
