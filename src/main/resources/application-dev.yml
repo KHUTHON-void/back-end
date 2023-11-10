@@ -44,7 +44,7 @@ server:
 
   compression:
     enabled: true
-    mime-types: multipart/form-data,text/plain,application/json,  application/octet-stream, image/heic,image/jpeg, image/png
+    mime-types: multipart/form-data,text/plain,application/json,  application/octet-stream, image/heic, image/jpeg, image/png, image/**
 
 
 cloud:

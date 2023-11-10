@@ -117,7 +117,10 @@ public class WebSecurityConfiguration {
         configuration.addExposedHeader("authorization");
         configuration.addExposedHeader("Cache-Control");
         configuration.addExposedHeader("Content-Type");
+        configuration.addExposedHeader("Access-Control-Allow-Credentials");
+        configuration.addAllowedHeader("Access-Control-Allow-Credentials");
         configuration.addExposedHeader("my-custom-header");
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

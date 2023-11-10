@@ -26,7 +26,7 @@ const startCam = async () =>{
 
 // 소켓 연결
 const connectSocket = async () =>{
-    const socket = new SockJS('https://void-team.kro.kr:8090/signaling');
+    const socket = new SockJS('https://void-team.kro.kr/signaling');
     stompClient = Stomp.over(socket);
     stompClient.debug = null;
 

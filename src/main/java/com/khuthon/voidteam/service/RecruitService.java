@@ -51,7 +51,7 @@ public class RecruitService {
     // 개별 조회
     @Transactional
     public RecruitResponseDto.RecruitDto findRecruit(Long recruitId, Principal principal){
-        Recruit recruit= recruitRepository.findById(recruitId).orElseThrow(() -> new NotFoundException("Recruit를 찾을 수 없습니다."));
+        Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new NotFoundException("Recruit를 찾을 수 없습니다."));
         Member nowMember = memberRepository.findByEmail(principal.getName()).orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
         Member recruitMember = recruit.getMember();
         Boolean isMyPost = recruitRepository.existsByMember(nowMember);

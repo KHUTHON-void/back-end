@@ -11,8 +11,9 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000", "http://localhost:8080")
-                .allowedHeaders("authorization", "User-Agent", "Cache-Control", "Content-Type", "my-custom-header")
-                .exposedHeaders("authorization", "User-Agent", "Cache-Control", "Content-Type", "my-custom-header")
+                .allowedHeaders("authorization", "User-Agent", "Cache-Control", "Content-Type", "Access-Control-Allow-Credentials", "my-custom-header")
+                .exposedHeaders("authorization", "User-Agent", "Cache-Control", "Content-Type", "Access-Control-Allow-Credentials","my-custom-header")
+                .allowCredentials(true)
                 .allowedMethods("*");
     }
 
