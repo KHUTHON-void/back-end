@@ -1,7 +1,6 @@
 package com.khuthon.voidteam.controller;
 
 import com.khuthon.voidteam.domain.Board;
-import com.khuthon.voidteam.domain.BoardFile;
 import com.khuthon.voidteam.dto.BoardRequestDto;
 import com.khuthon.voidteam.dto.BoardResponseDto;
 import com.khuthon.voidteam.service.BoardService;
@@ -23,7 +22,7 @@ public class BoardController {
     private final BoardService boardService;
 
 
-    @GetMapping("rooms")
+    @GetMapping("/rooms")
     public ResponseEntity<?> getBoards(Principal principal,@RequestParam(value = "category", required = false) String category, @RequestParam(value = "sort") String sort){
         return boardService.getBoards(principal, category, sort);
     }
@@ -37,6 +36,7 @@ public class BoardController {
         Board board = boardService.create(mediaList, request, principal);
         return ResponseEntity.ok(BoardResponseDto.CreateBoardDto.builder().boardId(board.getId()).build());
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @PatchMapping("/{boardId}")

@@ -22,7 +22,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -100,7 +99,8 @@ public class BoardService {
             String url = file.getUrl();
             list.add(url);
         }
-        result.setMediaList(list);
+        String listString = String.join(",", list);
+        result.setMediaList(listString);
         board.increaseHit();
         return result;
     }

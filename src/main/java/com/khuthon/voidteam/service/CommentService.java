@@ -101,7 +101,8 @@ public class CommentService {
                     String url = file.getUrl();
                     list.add(url);
                 }
-                result.setMediaList(list);
+                String listString = String.join(",", list);
+                result.setMediaList(listString);
                 resultList.add(result);
             }
         }

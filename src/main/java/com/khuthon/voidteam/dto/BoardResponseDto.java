@@ -21,7 +21,7 @@ public class BoardResponseDto {
         private String content;
         private Category category;
 
-        private List<String> mediaList;
+        private String mediaList;
 
         private LocalDateTime createdDate;
         private LocalDateTime modifiedDate;

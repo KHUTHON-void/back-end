@@ -1,7 +1,6 @@
 package com.khuthon.voidteam.controller;
 
 import com.khuthon.voidteam.domain.RecruitComment;
-import com.khuthon.voidteam.dto.CommentRequestDto;
 import com.khuthon.voidteam.dto.RecruitCommentRequestDto;
 import com.khuthon.voidteam.dto.RecruitCommentResponseDto;
 import com.khuthon.voidteam.service.RecruitCommentService;
@@ -40,7 +39,6 @@ public class RecruitCommentController {
     public ResponseEntity<List<RecruitCommentResponseDto.RecruitCommentDto>> getComment(@PathVariable(name = "recruitId") Long recruitId, Principal principal){
         return ResponseEntity.ok(recruitCommentService.getCommentList(recruitId, principal));
     }
-
 
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/recruit/{recruitId}/comment/{commentId}")
