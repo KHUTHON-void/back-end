@@ -16,5 +16,6 @@ public class AuthenticationResponse {
     Grade grade;
     String university;
     String email;
+    Double temperature;
 }
 

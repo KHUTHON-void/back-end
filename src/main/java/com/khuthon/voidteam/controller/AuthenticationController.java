@@ -1,8 +1,10 @@
 package com.khuthon.voidteam.controller;
 
 
+import com.khuthon.voidteam.dto.AuthenticationResponse;
 import com.khuthon.voidteam.dto.RegistrationRequest;
 import com.khuthon.voidteam.service.MemberService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 
 @Slf4j
@@ -32,21 +35,9 @@ public class AuthenticationController {
         return memberService.signUp(signUpRequest, profileImg, httpServletRequest, httpServletResponse);
     }
 
-//    @GetMapping("/validate-phone-number/{phoneNumber}")
-//    public ResponseEntity<Void> validatePhoneNumber(Principal principal, @PathVariable String phoneNumber) {
-//        memberService.validatePhoneNumber(principal, phoneNumber);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @GetMapping("/validate-email/{email}")
-//    public ResponseEntity<Void> validateEmail(Principal principal, @PathVariable String email) {
-//        memberService.validateEmail(principal, email);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @GetMapping("/validate-nickname/{nickname}")
-//    public ResponseEntity<Void> validateNickanme(Principal principal, @PathVariable String nickname){
-//        memberService.validateNickname(principal, nickname);
-//        return ResponseEntity.ok().build();
-//    }
+    @GetMapping("/validate-jwt")
+    public ResponseEntity<AuthenticationResponse> validateJwt(HttpServletRequest httpServletRequest) throws ServletException, IOException {
+        return ResponseEntity.ok(memberService.validateJwt(httpServletRequest));
+    }
+
 }

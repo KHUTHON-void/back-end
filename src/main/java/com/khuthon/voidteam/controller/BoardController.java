@@ -22,6 +22,13 @@ public class BoardController {
 
     private final BoardService boardService;
 
+
+    @GetMapping("/api/rooms")
+    public ResponseEntity<?> getBoards(Principal principal,@RequestParam(value = "category", required = false) String category, @RequestParam(value = "sort") String sort){
+        return boardService.getBoards(principal, category, sort);
+    }
+
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value ="", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<BoardResponseDto.CreateBoardDto> createBoard(@RequestPart(value = "mediaList", required= false) List<MultipartFile> mediaList,

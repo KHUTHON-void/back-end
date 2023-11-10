@@ -2,10 +2,12 @@ package com.khuthon.voidteam.service;
 
 import com.khuthon.voidteam.domain.Member;
 import com.khuthon.voidteam.domain.Role;
+import com.khuthon.voidteam.dto.AuthenticationResponse;
 import com.khuthon.voidteam.dto.RegistrationRequest;
 import com.khuthon.voidteam.dto.RegistrationResponse;
 import com.khuthon.voidteam.repository.MemberRepository;
 import com.khuthon.voidteam.util.S3Util;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -17,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 @Service
@@ -70,4 +74,20 @@ public class MemberService {
         return new ResponseEntity<RegistrationResponse>(registrationResponse, httpHeaders, HttpStatus.CREATED);
     }
 
+    public AuthenticationResponse validateJwt(HttpServletRequest httpServletRequest) throws ServletException, IOException {
+        String accessToken = jwtService.extractAccessToken(httpServletRequest).orElseThrow();
+        jwtService.validateToken(accessToken);
+        String email = jwtService.extractUsername(accessToken);
+        Member member = memberRepository.findByEmail(email).orElseThrow();
+        return AuthenticationResponse.builder()
+                .memberId(member.getId())
+                .nickname(member.getNickname())
+                .temperature(member.getTemperature())
+                .grade(member.getGrade())
+                .university(member.getUniversity())
+                .email(member.getEmail())
+                .profileImgURL(member.getProfileImgURL())
+                .build();
+
+    }
 }

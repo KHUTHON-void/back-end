@@ -17,8 +17,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
+
 
 @Component
 @Slf4j
@@ -50,6 +49,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                 .grade(member.getGrade())
                 .profileImgURL(member.getProfileImgURL())
                 .university(member.getUniversity())
+                .temperature(member.getTemperature())
                 .nickname(member.getNickname()).build();
         response.getWriter().write(objectMapper.writeValueAsString(authenticationResponse));
 
