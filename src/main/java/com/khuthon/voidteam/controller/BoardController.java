@@ -23,7 +23,7 @@ public class BoardController {
     private final BoardService boardService;
 
 
-    @GetMapping("rooms")
+    @GetMapping("/rooms")
     public ResponseEntity<?> getBoards(Principal principal,@RequestParam(value = "category", required = false) String category, @RequestParam(value = "sort") String sort){
         return boardService.getBoards(principal, category, sort);
     }
