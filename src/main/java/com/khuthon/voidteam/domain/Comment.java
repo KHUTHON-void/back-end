@@ -28,6 +28,10 @@ public class Comment {
     @JoinColumn(name = "board_id")
     private Board board;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @Builder.Default
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<CommentLike> Likes = new ArrayList<>();

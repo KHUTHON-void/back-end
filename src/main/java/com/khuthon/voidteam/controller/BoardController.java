@@ -25,9 +25,9 @@ public class BoardController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value ="", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<BoardResponseDto.CreateBoardDto> createBoard(@RequestPart(value = "mediaList", required= false) List<MultipartFile> mediaList,
-                                                                           @RequestPart(value = "data")String data, Principal principal) throws Exception {
+                                                                       @RequestPart(value = "data")BoardRequestDto.CreateBoardDto request, Principal principal) throws Exception {
 
-        Board board = boardService.create(mediaList, data, principal);
+        Board board = boardService.create(mediaList, request, principal);
         return ResponseEntity.ok(BoardResponseDto.CreateBoardDto.builder().boardId(board.getId()).build());
     }
 

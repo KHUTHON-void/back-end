@@ -24,7 +24,7 @@ public class CommentResponseDto {
     public static class CommentDto{
         private Long commentId;
         private String content;
-        //private MemberResponseDto.MemberSortDto user;
+        private MemberResponseDto.MemberDto member;
         private List<String> mediaList;
         private LocalDateTime createdDate;
         private LocalDateTime updatedDate;

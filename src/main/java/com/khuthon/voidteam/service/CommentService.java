@@ -4,9 +4,11 @@ import com.amazonaws.services.kms.model.NotFoundException;
 import com.khuthon.voidteam.domain.Board;
 import com.khuthon.voidteam.domain.Comment;
 import com.khuthon.voidteam.domain.CommentFile;
+import com.khuthon.voidteam.domain.Member;
 import com.khuthon.voidteam.dto.CommentRequestDto;
 import com.khuthon.voidteam.dto.CommentResponseDto;
-import com.khuthon.voidteam.util.JacksonUtil;
+import com.khuthon.voidteam.dto.MemberResponseDto;
+import com.khuthon.voidteam.repository.MemberRepository;
 import com.khuthon.voidteam.repository.BoardRepository;
 import com.khuthon.voidteam.repository.CommentFileRepository;
 import com.khuthon.voidteam.repository.CommentRepository;
@@ -27,23 +29,21 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
     private final CommentFileRepository commentFileRepository;
-    //private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final S3Util s3Util;
 
     @Transactional
-    public Comment create(List<MultipartFile> mediaList, Long boardId, String commentCreateDto, Principal principal) throws Exception {
+    public Comment create(List<MultipartFile> mediaList, Long boardId, CommentRequestDto.CreateCommentDto request, Principal principal) throws Exception {
 
-        JacksonUtil jacksonUtil = new JacksonUtil();
-        CommentRequestDto.CreateCommentDto request = (CommentRequestDto.CreateCommentDto) jacksonUtil.strToObj(commentCreateDto, CommentRequestDto.CreateCommentDto.class);
-//        Member member = memberRepository.findByEmail(principal.getName())
-//                .orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
+        Member member = memberRepository.findByEmail(principal.getName())
+                .orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new NotFoundException("Board를 찾을 수 없습니다"));
 
         Comment comment = Comment.builder()
                 .content(request.getContent())
                 .board(board)
-                //.member(member)
+                .member(member)
                 .build();
         commentRepository.save(comment);
         for(MultipartFile media: mediaList){
@@ -82,7 +82,7 @@ public class CommentService {
             CommentResponseDto.CommentDto result = CommentResponseDto.CommentDto.builder()
                     .commentId(comment.getId())
                     .content(comment.getContent())
-                    //.user()
+                    .member(MemberResponseDto.MemberDto.builder().memberId(comment.getMember().getId()).profileImgUrl(comment.getMember().getProfileImgURL()).nickname(comment.getMember().getNickname()).build())
                     .createdDate(comment.getCreatedDate())
                     .updatedDate(comment.getUpdatedDate())
                     .build();

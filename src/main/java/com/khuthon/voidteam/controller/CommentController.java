@@ -24,9 +24,9 @@ public class CommentController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/board/{boardId}/comment", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<CommentResponseDto.CreateCommentDto> createComment(Principal principal, @PathVariable(name = "boardId")Long boardId,
-                                                                             @RequestPart(value = "data") String data,
+                                                                             @RequestPart(value = "data") CommentRequestDto.CreateCommentDto request,
                                                                              @RequestPart(value = "mediaList", required= false) List<MultipartFile> mediaList) throws Exception {
-        Comment comment = commentService.create(mediaList, boardId, data, principal);
+        Comment comment = commentService.create(mediaList, boardId, request, principal);
         return ResponseEntity.ok(CommentResponseDto.CreateCommentDto.builder().commentId(comment.getId()).build());
     }
 

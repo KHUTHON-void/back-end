@@ -8,7 +8,6 @@ import com.khuthon.voidteam.dto.BoardRequestDto;
 import com.khuthon.voidteam.dto.BoardResponseDto;
 import com.khuthon.voidteam.dto.MemberResponseDto;
 import com.khuthon.voidteam.repository.MemberRepository;
-import com.khuthon.voidteam.util.JacksonUtil;
 import com.khuthon.voidteam.repository.BoardFileRepository;
 import com.khuthon.voidteam.repository.BoardLikeRepository;
 import com.khuthon.voidteam.repository.BoardRepository;
@@ -33,10 +32,8 @@ public class BoardService {
     private final S3Util s3Util;
 
     @Transactional
-    public Board create(List<MultipartFile> mediaList, String boardCreateDto, Principal principal) throws Exception {
+    public Board create(List<MultipartFile> mediaList, BoardRequestDto.CreateBoardDto request, Principal principal) throws Exception {
 
-        JacksonUtil jacksonUtil = new JacksonUtil();
-        BoardRequestDto.CreateBoardDto request = (BoardRequestDto.CreateBoardDto) jacksonUtil.strToObj(boardCreateDto, BoardRequestDto.CreateBoardDto.class);
         Member member = memberRepository.findByEmail(principal.getName()).orElseThrow(()-> new NotFoundException("유저를 찾을 수 없습니다."));
         Board board = Board.builder()
                 .title(request.getTitle())
