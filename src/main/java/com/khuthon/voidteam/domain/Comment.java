@@ -22,6 +22,8 @@ public class Comment {
     private Long id;
 
     private String content;
+
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int likeCount;
 
     @ManyToOne(fetch = FetchType.LAZY)

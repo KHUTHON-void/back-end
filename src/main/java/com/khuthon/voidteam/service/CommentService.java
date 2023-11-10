@@ -85,6 +85,7 @@ public class CommentService {
                     .commentId(comment.getId())
                     .isLiked(isLiked)
                     .isMyPost(isMyPost)
+                    .likecount(comment.getLikeCount())
                     .content(comment.getContent())
                     .member(MemberResponseDto.MemberDto.builder().memberId(comment.getMember().getId()).profileImgUrl(comment.getMember().getProfileImgURL()).nickname(comment.getMember().getNickname()).build())
                     .createdDate(comment.getCreatedDate())

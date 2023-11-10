@@ -26,6 +26,7 @@ public class CommentResponseDto {
         private String content;
         private Boolean isLiked;
         private Boolean isMyPost;
+        private int likecount;
         private MemberResponseDto.MemberDto member;
         private List<String> mediaList;
         private LocalDateTime createdDate;
