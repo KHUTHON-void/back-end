@@ -1,10 +1,7 @@
 package com.khuthon.voidteam.service;
 
 import com.amazonaws.services.kms.model.NotFoundException;
-import com.khuthon.voidteam.domain.Board;
-import com.khuthon.voidteam.domain.Comment;
-import com.khuthon.voidteam.domain.CommentFile;
-import com.khuthon.voidteam.domain.Member;
+import com.khuthon.voidteam.domain.*;
 import com.khuthon.voidteam.dto.CommentRequestDto;
 import com.khuthon.voidteam.dto.CommentResponseDto;
 import com.khuthon.voidteam.dto.MemberResponseDto;
@@ -107,6 +104,20 @@ public class CommentService {
             }
         }
         return resultList;
+    }
+
+    @Transactional
+    public void updateGrade(String username){
+        Member member = memberRepository.findByEmail(username).get();
+        int size = member.getComment().size();
+        if(size == 1){
+            member.setGrade(Grade.BRONZE);
+        }
+        else if(size == 2){
+            member.setGrade(Grade.SILVER);
+        } else if (size > 3) {
+            member.setGrade(Grade.GOLD);
+        }
     }
 
 }

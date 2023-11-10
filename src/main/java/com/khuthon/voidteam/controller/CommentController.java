@@ -27,6 +27,7 @@ public class CommentController {
                                                                              @RequestPart(value = "data") CommentRequestDto.CreateCommentDto request,
                                                                              @RequestPart(value = "mediaList", required= false) List<MultipartFile> mediaList) throws Exception {
         Comment comment = commentService.create(mediaList, boardId, request, principal);
+        commentService.updateGrade(principal.getName());
         return ResponseEntity.ok(CommentResponseDto.CreateCommentDto.builder().commentId(comment.getId()).build());
     }
 
@@ -50,6 +51,8 @@ public class CommentController {
         commentService.delete(boardId,commentId);
         return ResponseEntity.ok().build();
     }
+
+
 
 
 

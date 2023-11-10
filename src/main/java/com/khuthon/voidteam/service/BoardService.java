@@ -141,7 +141,7 @@ public class BoardService {
 
     private Sort getSortType(String sort){
         if(SortType.VIEW.getSortType().equals(sort)){
-            return Sort.by(Sort.Order.desc("view"));
+            return Sort.by(Sort.Order.desc("viewCount"));
         }
         else if(SortType.LIKE.getSortType().equals(sort)){
             return Sort.by(Sort.Order.desc("likeCount"));
