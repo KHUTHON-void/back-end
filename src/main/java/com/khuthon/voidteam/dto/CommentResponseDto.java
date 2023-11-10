@@ -24,6 +24,8 @@ public class CommentResponseDto {
     public static class CommentDto{
         private Long commentId;
         private String content;
+        private Boolean isLiked;
+        private Boolean isMyPost;
         private MemberResponseDto.MemberDto member;
         private List<String> mediaList;
         private LocalDateTime createdDate;

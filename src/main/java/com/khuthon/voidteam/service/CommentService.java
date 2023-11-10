@@ -8,10 +8,7 @@ import com.khuthon.voidteam.domain.Member;
 import com.khuthon.voidteam.dto.CommentRequestDto;
 import com.khuthon.voidteam.dto.CommentResponseDto;
 import com.khuthon.voidteam.dto.MemberResponseDto;
-import com.khuthon.voidteam.repository.MemberRepository;
-import com.khuthon.voidteam.repository.BoardRepository;
-import com.khuthon.voidteam.repository.CommentFileRepository;
-import com.khuthon.voidteam.repository.CommentRepository;
+import com.khuthon.voidteam.repository.*;
 import com.khuthon.voidteam.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,7 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
     private final CommentFileRepository commentFileRepository;
+    private final CommentLikeRepository commentLikeRepository;
     private final MemberRepository memberRepository;
     private final S3Util s3Util;
 
@@ -73,14 +71,20 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
-    public List<CommentResponseDto.CommentDto> getCommentList(Long boardId) {
+    public List<CommentResponseDto.CommentDto> getCommentList(Long boardId, Principal principal) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new NotFoundException("Board가 존재하지 않습니다."));
         List<Comment> CommentList = commentRepository.findAllByBoard(board);
         List<CommentResponseDto.CommentDto> resultList = new ArrayList<>();
+        Member nowMember = memberRepository.findByEmail(principal.getName())
+                .orElseThrow(()-> new NotFoundException("사용자가 존재하지 않습니다."));
         for (Comment comment : CommentList) {
+            Boolean isLiked = commentLikeRepository.existsCommentLikeByMemberAndBoardAndComment(nowMember, board, comment);
+            Boolean isMyPost = boardRepository.existsByMember(nowMember);
             CommentResponseDto.CommentDto result = CommentResponseDto.CommentDto.builder()
                     .commentId(comment.getId())
+                    .isLiked(isLiked)
+                    .isMyPost(isMyPost)
                     .content(comment.getContent())
                     .member(MemberResponseDto.MemberDto.builder().memberId(comment.getMember().getId()).profileImgUrl(comment.getMember().getProfileImgURL()).nickname(comment.getMember().getNickname()).build())
                     .createdDate(comment.getCreatedDate())

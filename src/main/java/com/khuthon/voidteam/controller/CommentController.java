@@ -39,8 +39,8 @@ public class CommentController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/board/{boardId}/comment")
-    public ResponseEntity<List<CommentResponseDto.CommentDto>> getComment(@PathVariable(name = "boardId")Long boardId){
-        return ResponseEntity.ok(commentService.getCommentList(boardId));
+    public ResponseEntity<List<CommentResponseDto.CommentDto>> getComment(@PathVariable(name = "boardId") Long boardId, Principal principal){
+        return ResponseEntity.ok(commentService.getCommentList(boardId, principal));
     }
 
 
